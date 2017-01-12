@@ -45,6 +45,7 @@ public class UserAction {
 	 */
 	@RequestMapping(value = "/admin/user", method = RequestMethod.POST)
 	public String save(@ModelAttribute UserVo userVo) {
+
 		if (userVo.getAccount() == null || userVo.getName() == null || userVo.getPassword() == null) {
 			return Contants.ERROR_PARAM;
 		}
@@ -120,8 +121,8 @@ public class UserAction {
 	}
 
 
-	@RequestMapping(value = "/user/getByShopId", method = RequestMethod.GET)
-	public Map<String,Object> getUserByShopId(Long shopId){
+	@RequestMapping(value = "/user/getByShopId/{shopId}", method = RequestMethod.GET)
+	public Map<String,Object> getUserByShopId(@PathVariable("shopId")Long shopId){
 		if(shopId<=0){
 			return ReturnUtils.getParamErrorReturn();
 		}

@@ -1,4 +1,7 @@
 package com.gdut.vo;
+
+import com.gdut.utils.Invisible;
+
 /**
  * 描述：用户账号VO
  * 
@@ -10,11 +13,13 @@ public class UserVo {
 	 private String account;
 	 private String password;
 	 private String name;
+
 	 private Long shopId;
 	 
 	/**
 	 * 查询店铺Id所属后，保存用户类型
 	 */
+	@Invisible
 	private int userType;	 
 	public Long getId() {
 		return id;
@@ -43,7 +48,7 @@ public class UserVo {
 	public Long getShopId() {
 		return shopId;
 	}
-	public void setUserType(Long shopId) {
+	public void setShopId(Long shopId) {
 		this.shopId = shopId;
 	}
 //	public UserVo getUserVo() {

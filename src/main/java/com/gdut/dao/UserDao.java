@@ -17,8 +17,8 @@ import com.gdut.vo.UserVo;
  * @author ZListen 20170107
  */
 public interface UserDao {
-	@Insert("INSERT INTO user (account,password,name,userType) VALUES "
-			+ "(#{account},#{password},#{name},#{userType})")
+	@Insert("INSERT INTO user (account,password,name,shopId) VALUES "
+			+ "(#{account},#{password},#{name},#{shopId})")
 	public void save(UserVo userVo);
 
 	@Delete("DELETE  FROM user WHERE id=#{id}")
