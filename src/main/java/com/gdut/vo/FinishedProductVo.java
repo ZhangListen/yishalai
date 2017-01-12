@@ -30,4 +30,11 @@ public class FinishedProductVo {
     public void setUrl(String url) {
         this.url = url;
     }
+    public List<AttributeVo> getAttributeVos() {
+        return attributeVos;
+    }
+
+    public void setAttributeVos(List<AttributeVo> attributeVos) {
+        this.attributeVos = attributeVos;
+    }
 }

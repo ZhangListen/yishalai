@@ -4,31 +4,16 @@ import com.gdut.service.FinishProductService;
 import com.gdut.utils.Contants;
 import com.gdut.utils.ReturnUtils;
 import com.gdut.vo.FinishedProductVo;
-import com.gdut.vo.MaterialVo;
-import com.gdut.vo.ProductDetail;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.StringUtil;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
-import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
-import org.aspectj.util.FileUtil;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
-import org.springframework.web.servlet.ModelAndView;
-
 import javax.annotation.Resource;
-import javax.servlet.ServletException;
-import javax.servlet.http.Part;
 import java.io.*;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Created by huang on 2017/1/7.
@@ -62,10 +47,12 @@ public class FinishedProductAction {
         System.out.println(drFile.getAbsolutePath());
         try {
             writeToFile(file.getInputStream(), drFile.getPath()+File.separator+fileName);
+            Map<String,Object> result=new HashMap<>();
+            result.put("url",fileName);
+            return result;
         } catch (IOException e) {
             return ReturnUtils.getServerErrorReturn();
         }
-        return ReturnUtils.getSuccessReturn();
     }
 
 
@@ -86,11 +73,9 @@ public class FinishedProductAction {
         }
     }
 
-    @RequestMapping(value = "/finish",method = RequestMethod.POST)
+    @RequestMapping(value = "/admin/finish",method = RequestMethod.POST)
     public Map<String,Object> save(@ModelAttribute FinishedProductVo finishedProductVo,HttpServletRequest request){
-        Map<String,Object> map=new HashMap<>();
-        String file=request.getSession().getServletContext().getRealPath("picture");
-        System.out.println(file);
+        Map<String,Object> map=new HashMap<>();;
         if(finishedProductVo==null){
             return ReturnUtils.getParamErrorReturn();
         }
@@ -106,7 +91,7 @@ public class FinishedProductAction {
 
     }
 
-    @RequestMapping(value = "/finish/{id}",method = RequestMethod.DELETE)
+    @RequestMapping(value = "/admin/finish/{id}",method = RequestMethod.DELETE)
     public Map<String,Object> delete(@PathVariable("id") Long id){
 
         try{
@@ -118,7 +103,7 @@ public class FinishedProductAction {
         }
     }
 
-    @RequestMapping(value = "/finish/{id}",method = RequestMethod.PUT)
+    @RequestMapping(value = "/admin/finish/{id}",method = RequestMethod.PUT)
     public Map<String,Object> update(@PathVariable Long id,@ModelAttribute FinishedProductVo finishedProductVo){
         try{
             finishedProductVo.setId(id);
@@ -131,7 +116,7 @@ public class FinishedProductAction {
     }
 
     @RequestMapping(value = "/finish",method = RequestMethod.GET)
-    public Map<String,Object> get(HttpServletRequest request){
+    public Map<String,Object> getById(HttpServletRequest request){
 
         try{
             String strPageNum=request.getParameter("pageNum");
@@ -153,13 +138,17 @@ public class FinishedProductAction {
         }
 
     }
+
+
     @RequestMapping(value = "/productdetails",method = RequestMethod.GET)
-    public void getProductDetails(HttpServletRequest request){
-    	// TODO
-//   		 List<ProductDetail> list = finishProductService.getProductDetails();
-//   		 for(int i = 0;i<list.size();i++){
-//   			 System.out.println(list.get(i).toString());
-//   		 }
-   	 
+    public Map<String,Object> getProductDetails(){
+        Map<String,Object> result=new HashMap<>();
+        try{
+            result.put("data",finishProductService.getProductDetails());
+            return result;
+        }catch (Exception e){
+            logger.error("FinishedProductAction-----------get()"+e);
+            return ReturnUtils.getServerErrorReturn();
+        }
     }
 }

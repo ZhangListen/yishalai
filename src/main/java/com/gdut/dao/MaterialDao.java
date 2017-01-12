@@ -10,7 +10,6 @@ import org.apache.ibatis.annotations.Update;
 
 import com.gdut.config.SimpleUpdateExtendedLanguageDriver;
 import com.gdut.vo.MaterialVo;
-import com.gdut.vo.ProductDetail;
 
 /**
  * Created by huang on 2017/1/7.

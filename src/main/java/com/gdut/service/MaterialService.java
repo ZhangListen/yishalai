@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.gdut.dao.MaterialDao;
 import com.gdut.vo.MaterialVo;
-import com.gdut.vo.ProductDetail;
+
 
 /**
  * Created by huang on 2017/1/7.
